@@ -31,7 +31,7 @@ jobs:
         run: |
           cd ${{github.workspace}}/build
           lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info '*/unittests/*' --output-file coverage.info
+          lcov --remove coverage.info '*/unittests/*' '/usr/*' --output-file coverage.info
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v1
