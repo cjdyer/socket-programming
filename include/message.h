@@ -1,3 +1,6 @@
+#ifndef __MESSAGE_H__
+#define __MESSAGE_H__
+
 #include <vector>
 #include <string>
 #include <sstream>
@@ -35,3 +38,5 @@ struct Message
 private:
     static constexpr uint16_t MAGIC_NUMBER = 0xAE73;
 };
+
+#endif // __MESSAGE_H__
