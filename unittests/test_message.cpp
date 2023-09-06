@@ -21,11 +21,24 @@ TEST(MessageTest, encode_decode)
     EXPECT_EQ(original_message.contents, decoded_message.contents);
 }
 
-TEST(MessageTest, invalid_magic_number)
+TEST(MessageTest, invalid_decode)
 {
-    std::vector<uint8_t> encoded = {0x00, 0x00};
+    std::vector<uint8_t> invalid_encoded_message;
 
-    ASSERT_THROW(Message::decode(encoded.data(), encoded.size()), std::runtime_error);
+    // Invalid input
+    invalid_encoded_message = {0x00, 0x00};
+
+    ASSERT_THROW(Message::decode(invalid_encoded_message.data(), invalid_encoded_message.size()), std::runtime_error);
+
+    // Incorrect magic number
+    invalid_encoded_message = {0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
+
+    ASSERT_THROW(Message::decode(invalid_encoded_message.data(), invalid_encoded_message.size()), std::runtime_error);
+
+    // Incomplete message
+    invalid_encoded_message = {0xAE, 0x73, 0x01, 0x02, 0x02, 0x00, 0x02};
+
+    ASSERT_THROW(Message::decode(invalid_encoded_message.data(), invalid_encoded_message.size()), std::runtime_error);
 }
 
 TEST(MessageTest, type_to_string)
@@ -33,4 +46,6 @@ TEST(MessageTest, type_to_string)
     EXPECT_EQ("READ", type_to_str(Type::READ));
     EXPECT_EQ("CREATE", type_to_str(Type::CREATE));
     EXPECT_EQ("RESPONSE", type_to_str(Type::RESPONSE));
+    EXPECT_EQ("", type_to_str(static_cast<Type>((int)Type::RESPONSE + 1)));
+    EXPECT_EQ("", type_to_str(static_cast<Type>((int)Type::READ - 1)));
 }
