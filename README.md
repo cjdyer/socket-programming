@@ -1,5 +1,7 @@
 # Socket Programming
 
+[![codecov](https://codecov.io/gh/cjdyer/socket-programming/graph/badge.svg?token=3EV51Y9W2H)](https://codecov.io/gh/cjdyer/socket-programming)
+
 A c++ recreation of: https://github.com/hazzery/socket-programming
 
 ## Setup
